@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab 9</title>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
 
   <style>
     button {
@@ -88,21 +89,115 @@
   </main>
 
   <script>
+    window.TrackJS && TrackJS.install({token:'7cb216766aa5482685fbb3908c8746e6'});
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
-      e.preventDefault();
-      let output = document.querySelector('output');
-      let firstNum = document.querySelector('#first-num').value;
-      let secondNum = document.querySelector('#second-num').value;
-      let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+        e.preventDefault();
+        let output = document.querySelector('output');
+        let firstNum = document.querySelector('#first-num').value;
+        let secondNum = document.querySelector('#second-num').value;
+        let operator = document.querySelector('#operator').value;
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
-    // You may move this JS to another file if you wish
+    // You may move this JS to another file if you 
+    for (let i = 0; i < errorBtns.length; i++) {
+        errorBtns[i].addEventListener('click', ()=> {
+            switch (i) {
+                case 0:
+                    console.log("Console Log Demo");
+                    break;
+                case 1:
+                    console.error("Console Error Demo");
+                    break;
+                case 2:
+                    for (let j = 0; j < 3; j++) {
+                        console.count();
+                    }
+                    break;
+                case 3:
+                    console.warn("Console Warn Demo");
+                    break;
+                case 4: 
+                    console.assert(1 + 1 == 3, "Console Assert Demo");
+                    break;
+                case 5:
+                    console.clear();
+                    break;
+                case 6:
+                    console.dir(errorBtns[6]);
+                    break;
+                case 7:
+                    console.dirxml(form);
+                    break;
+                case 8:
+                    console.group("New Group");
+                    break;
+                case 9:
+                    console.groupEnd();
+                    break;
+                case 10: 
+                    console.table(["Console", "Table", "Demo"]);
+                    break;
+                case 11:
+                    console.time();
+                    console.log("Timer Started");
+                    break;
+                case 12:
+                    console.timeEnd();                
+                    break;
+                case 13:
+                    console.trace();
+                    break;
+                case 14:
+                    let newUser = {
+                        name: "John",
+                        age: 69,
+                        birthday: null,
+                    }
+
+                    try {
+                        if (newUser.name == null) {
+                            throw new ValidateNotNull("name is undefined!");
+                        }
+
+                        if (newUser.age == null) {
+                            throw new ValidateNotNull("age is undefined!");
+                        }
+
+                        if (newUser.birthday == null) {
+                            throw new ValidateNotNull("birthday is undefined!");
+                        }
+
+                        console.log("User is valid!");
+                    }
+                    catch(err) {
+                        if (err instanceof ValidateNotNull) {
+                            console.error("A field is undefined: " + err.message)
+                        }
+                        // Unknown error, rethrow it
+                        else {
+                            throw err;
+                        }
+                    }
+                    finally {
+                        console.log("Console Try/Catch/Finally with custom error demo!");
+                    }
+                    break;
+            }
+        })
+    }
+
+    class ValidateNotNull extends Error {
+        constructor(message) {
+            super(message);
+            this.name = "ValidateNotNull";
+        }
+    }
   </script>
 </body>
-
 </html>
